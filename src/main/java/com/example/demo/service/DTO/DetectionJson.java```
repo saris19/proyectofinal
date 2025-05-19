@@ -1,0 +1,3 @@
+Y el paquete declarado también es correcto:
+```java
+package com.example.demo.service.DTO;
