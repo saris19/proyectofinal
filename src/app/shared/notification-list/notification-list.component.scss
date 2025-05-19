@@ -1,0 +1,24 @@
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  width: 350px;
+
+  .alert {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+    transition: all 0.3s ease;
+
+    .btn-close {
+      float: right;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

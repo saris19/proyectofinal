@@ -1,0 +1,136 @@
+<div class="container mt-3">
+  <div class="text-center mb-4">
+    <h1 class="display-4">🚦 Análisis de Tráfico Inteligente</h1>
+    <p class="lead">Monitoreo en tiempo real</p>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header bg-primary text-white">
+      <i class="fas fa-cog me-2"></i> Configuración del Detector
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Tipo de detector:</label>
+          <select class="form-select" [(ngModel)]="detectorType">
+            <option value="camera">Cámara HD</option>
+            <option value="lidar">Sensor LiDAR</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-success mt-4" (click)="startDetection()">
+            <i class="fas fa-play me-2"></i> Iniciar Detección
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header bg-secondary text-white">
+      <i class="fas fa-filter me-2"></i> Filtros
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Filtrar por fecha:</label>
+          <input type="date" class="form-control" [(ngModel)]="dateFilter">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Filtrar por tipo:</label>
+          <select class="form-select" [(ngModel)]="vehicleTypeFilter">
+            <option value="todos">Todos los vehículos</option>
+            <option value="Automóvil">Automóviles</option>
+            <option value="Camión">Camiones</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total</h5>
+          <p class="card-text display-6">{{ stats.totalVehicles }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <h5 class="card-title">Autos</h5>
+          <p class="card-text display-6">{{ stats.cars }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning text-dark">
+        <div class="card-body">
+          <h5 class="card-title">Camiones</h5>
+          <p class="card-text display-6">{{ stats.trucks }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <h5 class="card-title">Ejes (prom.)</h5>
+          <p class="card-text display-6">{{ stats.avgAxles | number:'1.1-1' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header bg-info text-white">
+      <i class="fas fa-chart-bar me-2"></i> Gráfica de Tráfico
+    </div>
+    <div class="card-body">
+      <div class="chart-container">
+        <canvas baseChart
+          [type]="trafficChartType"
+          [data]="trafficChartData"
+          [options]="trafficChartOptions">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header bg-dark text-white">
+      <i class="fas fa-list me-2"></i> Registros Recientes
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tipo</th>
+            <th>Ejes</th>
+            <th>Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehicle of filteredVehicles; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ vehicle.type }}</td>
+            <td>{{ vehicle.axleCount }}</td>
+            <td>{{ vehicle.timestamp | date:'HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header bg-dark text-white">
+      <i class="fas fa-map-marked-alt me-2"></i> Mapa de Detecciones
+    </div>
+    <div class="card-body">
+      <app-map></app-map>
+    </div>
+  </div>
+</div>

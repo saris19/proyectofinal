@@ -1,0 +1,11 @@
+<div class="notification-container">
+  <div *ngFor="let notif of notificationService.currentNotifications | async" 
+       class="alert alert-{{ notif.type }}" role="alert">
+    <button type="button" class="btn-close" 
+            (click)="notificationService.removeNotification(notif.id)"></button>
+    {{ notif.message }}
+    <small class="text-muted d-block mt-1">
+      {{ notif.timestamp | date:'HH:mm:ss' }}
+    </small>
+  </div>
+</div>
